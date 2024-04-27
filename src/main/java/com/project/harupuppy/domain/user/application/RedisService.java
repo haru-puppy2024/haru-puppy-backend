@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.Optional;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -17,7 +18,7 @@ public class RedisService {
         redisTemplate.opsForValue().set(key, value);
     }
 
-    public void setValue(String key, String value, Duration duration) {
+    public void setValueWithDuration(String key, String value, Duration duration) {
         redisTemplate.opsForValue().set(key, value, duration);
     }
 
@@ -28,5 +29,12 @@ public class RedisService {
 
     public void deleteValue(String key) {
         redisTemplate.delete(key);
+    }
+
+    public void deleteValuesByUserId(String userId) {
+        Set<String> keys = redisTemplate.keys(userId + "_*");
+        if (keys != null && !keys.isEmpty()) {
+            redisTemplate.delete(keys);
+        }
     }
 }

@@ -40,14 +40,17 @@ public class UserFacadeService {
         OAuthLoginResponse response = oAuthService.login(provider, code);
 
         if (response.isAlreadyRegistered()) {
+            redisService.deleteValuesByUserId(String.valueOf(response.registeredUser().userId()));
             TokenDto token = createTokenAndSave(response.registeredUser());
-
             return new LoginResponse(response, token.accessToken(), token.refreshToken());
         }
 
         return LoginResponse.of(response);
     }
 
+    /**
+     * 회원 가입
+     */
     @Transactional
     public UserCreateResponse create(HomeCreateRequest request) {
         UserCreateResponse userDetail = userService.create(request);
@@ -56,6 +59,9 @@ public class UserFacadeService {
         return userDetail;
     }
 
+    /**
+     * 초대 유저 회원 가입
+     */
     @Transactional
     public UserCreateResponse create(UserCreateRequest request, String homeId) {
         UserCreateResponse userDetail = userService.create(request, homeId);
@@ -67,16 +73,22 @@ public class UserFacadeService {
     @Transactional
     public TokenDto createTokenAndSave(UserDetailResponse response) {
         TokenDto token = jwtTokenUtils.generateToken(response);
-        redisService.setValue(token.tokenKey(), token.refreshToken(), Duration.ofMillis(refreshExpiredTimeMs));
+        redisService.setValueWithDuration(token.tokenKey(), token.refreshToken(), Duration.ofMillis(refreshExpiredTimeMs));
         return token;
     }
 
+    /**
+     * 유저 탈퇴
+     */
     @Transactional
     public void withdraw(UserDetail requestUser){
         String email = userService.withdraw(requestUser.getUserId());
         redisService.deleteValue(email);
     }
 
+    /**
+     * 토큰 재발급
+     */
     @Transactional
     public TokenDto reissue(String refreshToken){
         final String validToken = validateToken(refreshToken);
@@ -93,6 +105,9 @@ public class UserFacadeService {
         return newToken;
     }
 
+    /**
+     * 로그아웃
+     */
     @Transactional
     public void logout(String accessToken){
         final String validToken = validateToken(accessToken);

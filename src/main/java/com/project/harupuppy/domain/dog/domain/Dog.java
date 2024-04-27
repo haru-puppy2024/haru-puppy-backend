@@ -1,6 +1,8 @@
 package com.project.harupuppy.domain.dog.domain;
 
+import com.project.harupuppy.domain.dog.dto.DogUpdateRequest;
 import com.project.harupuppy.domain.user.domain.Home;
+import com.project.harupuppy.global.utils.DateUtils;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -44,5 +46,15 @@ public class Dog {
         this.birthday = birthday;
         this.weight = weight;
         this.home = home;
+    }
+
+    public void update(DogUpdateRequest request) {
+        DateUtils.validateDate(request.birthday());
+        String formattedValue = String.format("%.1f", request.weight());
+        this.name = request.name();
+        this.imgUrl = request.imgUrl();
+        this.gender = request.gender();
+        this.birthday = DateUtils.parseDate(request.birthday());
+        this.weight = Double.parseDouble(formattedValue);
     }
 }
