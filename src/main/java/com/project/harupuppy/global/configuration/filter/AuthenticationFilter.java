@@ -34,7 +34,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
             List.of("/", "/h2", "/auth/login/*", "/api/users/register", "/api/users/invitation/*");
 
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+    protected boolean shouldNotFilter(HttpServletRequest request) {
         return PERMIT_URLS.stream()
                 .anyMatch(pattern -> pathMatcher.match(pattern, request.getServletPath()));
     }

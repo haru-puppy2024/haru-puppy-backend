@@ -42,7 +42,7 @@ public class AuthController {
     /**
      * 토큰 재발급
      */
-    @PostMapping("/reissue")
+    @PostMapping("/refresh")
     public ApiResponse<TokenDto> reissue(HttpServletRequest request) {
         String refreshToken = request.getHeader("Authorization");
         return ApiResponse.ok(Response.Status.CREATE, userFacadeService.reissue(refreshToken));
