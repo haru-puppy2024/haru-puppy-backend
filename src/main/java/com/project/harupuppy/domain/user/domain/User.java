@@ -21,14 +21,15 @@ public class User {
     private Long userId;
 
     @Email
-    @Column(unique = true)
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "img_url")
     private String imgUrl;
 
     @KoreanNickname
-    private String nickname;
+    @Column(name = "nickname")
+    private String nickName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user_role")
@@ -49,10 +50,10 @@ public class User {
     private Home home;
 
     @Builder
-    public User(String email, String userImg, String nickname, UserRole userRole, Home home, Dog dog) {
+    public User(String email, String userImg, String nickName, UserRole userRole, Home home, Dog dog) {
         this.email = email;
         this.imgUrl = userImg;
-        this.nickname = nickname;
+        this.nickName = nickName;
         this.userRole = userRole;
         this.dog = dog;
         this.home = home;
@@ -61,7 +62,7 @@ public class User {
     }
 
     public void update(UserUpdateRequest updateRequest) {
-        this.nickname = updateRequest.nickname();
+        this.nickName = updateRequest.nickName();
         this.userRole = updateRequest.userRole();
     }
 

@@ -8,7 +8,7 @@ public record UserUpdateRequest(
         @NotNull(message = "유저번호는 필수항목입니다.")
         Long userId,
         @NotBlank(message = "닉네임을 입력해주세요.")
-        String nickname,
+        String nickName,
         @NotNull(message = "역할을 입력해주세요.")
         UserRole userRole
 ) {

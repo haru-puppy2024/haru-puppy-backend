@@ -16,7 +16,7 @@ public record UserCreateRequest(
     public static User fromDto(UserCreateRequest request, Home home, Dog dog){
         return User.builder()
                 .email(request.email)
-                .nickname(request.nickName)
+                .nickName(request.nickName)
                 .userImg(request.imgUrl)
                 .userRole(request.userRole)
                 .home(home)

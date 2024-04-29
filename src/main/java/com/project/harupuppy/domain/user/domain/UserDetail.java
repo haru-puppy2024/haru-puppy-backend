@@ -36,7 +36,7 @@ public class UserDetail implements UserDetails {
         return UserDetail.builder()
                 .userId(user.getUserId())
                 .email(user.getEmail())
-                .nickName(user.getNickname())
+                .nickName(user.getNickName())
                 .userRole(user.getUserRole())
                 .isDeleted(user.isDeleted())
                 .allowNotification(user.isAllowNotification())
