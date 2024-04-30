@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class HealthCheck {
 
-    @GetMapping("/health-check")
-    public ResponseEntity<Void> healthCheck() {
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+    @GetMapping("/healthcheck")
+    public ResponseEntity<String> healthCheck() {
+        System.out.println("true = " + true);
+        return ResponseEntity.status(HttpStatus.OK).body("OK");
     }
 
 }
