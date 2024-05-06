@@ -24,7 +24,7 @@ public class DogController {
      */
     @PatchMapping("")
     public ApiResponse<DogDetailResponse> update(@NotNull @RequestBody @Valid DogUpdateRequest request) {
-        return ApiResponse.ok(Response.Status.CREATE, dogService.updateDogProfile(request));
+        return ApiResponse.ok(Response.Status.UPDATE, dogService.updateDogProfile(request));
     }
 
 }
