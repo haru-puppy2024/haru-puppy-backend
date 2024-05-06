@@ -42,6 +42,7 @@ public class AuthenticationConfig {
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/users/**", "/auth/**").permitAll()
+                        .requestMatchers("/api/dogs/**").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(new AuthenticationFilter(userService, jwtTokenUtils), UsernamePasswordAuthenticationFilter.class);
         return http.build();
