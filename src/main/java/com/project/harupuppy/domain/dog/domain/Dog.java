@@ -1,7 +1,6 @@
 package com.project.harupuppy.domain.dog.domain;
 
 import com.project.harupuppy.domain.dog.dto.DogUpdateRequest;
-import com.project.harupuppy.domain.user.domain.Home;
 import com.project.harupuppy.global.utils.DateUtils;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
@@ -33,19 +32,19 @@ public class Dog {
 
     private Double weight;
 
-    @OneToOne
-    @JoinColumn(name = "home_id")
-    private Home home;
+//    @OneToOne
+//    @JoinColumn(name = "home_id")
+//    private Home home;
 
     @Builder
     public Dog(
-            String name, String imgUrl, DogGender gender, LocalDate birthday, Double weight, Home home) {
+            String name, String imgUrl, DogGender gender, LocalDate birthday, Double weight) {
         this.name = name;
         this.imgUrl = imgUrl;
         this.gender = gender;
         this.birthday = birthday;
         this.weight = weight;
-        this.home = home;
+//        this.home = home;
     }
 
     public void update(DogUpdateRequest request) {

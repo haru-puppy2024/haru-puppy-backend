@@ -1,5 +1,7 @@
 package com.project.harupuppy.domain.user.dto.response;
 
+import com.project.harupuppy.domain.dog.dto.DogDetailResponse;
+import com.project.harupuppy.domain.home.dto.HomeDetailResponse;
 import com.project.harupuppy.domain.user.dto.TokenDto;
 import lombok.Builder;
 import lombok.Getter;

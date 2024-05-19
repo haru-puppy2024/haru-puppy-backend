@@ -2,7 +2,7 @@ package com.project.harupuppy.domain.user.application;
 
 import com.project.harupuppy.domain.user.domain.UserDetail;
 import com.project.harupuppy.domain.user.dto.TokenDto;
-import com.project.harupuppy.domain.user.dto.request.HomeCreateRequest;
+import com.project.harupuppy.domain.home.dto.HomeCreateRequest;
 import com.project.harupuppy.domain.user.dto.request.UserCreateRequest;
 import com.project.harupuppy.domain.user.dto.response.LoginResponse;
 import com.project.harupuppy.domain.user.dto.response.OAuthLoginResponse;

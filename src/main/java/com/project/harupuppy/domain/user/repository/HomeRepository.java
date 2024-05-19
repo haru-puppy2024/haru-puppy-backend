@@ -1,6 +1,6 @@
 package com.project.harupuppy.domain.user.repository;
 
-import com.project.harupuppy.domain.user.domain.Home;
+import com.project.harupuppy.domain.home.domain.Home;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

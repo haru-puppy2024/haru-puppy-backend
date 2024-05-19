@@ -2,7 +2,7 @@ package com.project.harupuppy.domain.dog.api;
 
 import com.project.harupuppy.domain.dog.application.DogService;
 import com.project.harupuppy.domain.dog.dto.DogUpdateRequest;
-import com.project.harupuppy.domain.user.dto.response.DogDetailResponse;
+import com.project.harupuppy.domain.dog.dto.DogDetailResponse;
 import com.project.harupuppy.global.common.response.ApiResponse;
 import com.project.harupuppy.global.common.response.Response;
 import jakarta.validation.Valid;

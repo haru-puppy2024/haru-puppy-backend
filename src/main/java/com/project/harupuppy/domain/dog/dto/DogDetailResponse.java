@@ -1,4 +1,4 @@
-package com.project.harupuppy.domain.user.dto.response;
+package com.project.harupuppy.domain.dog.dto;
 
 import com.project.harupuppy.domain.dog.domain.Dog;
 import com.project.harupuppy.domain.dog.domain.DogGender;

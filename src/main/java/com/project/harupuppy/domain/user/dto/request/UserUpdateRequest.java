@@ -1,4 +1,4 @@
-package com.project.harupuppy.domain.user.dto;
+package com.project.harupuppy.domain.user.dto.request;
 
 import com.project.harupuppy.domain.user.domain.UserRole;
 import jakarta.validation.constraints.NotBlank;
