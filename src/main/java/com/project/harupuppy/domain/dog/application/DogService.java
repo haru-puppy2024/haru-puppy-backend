@@ -3,7 +3,7 @@ package com.project.harupuppy.domain.dog.application;
 import com.project.harupuppy.domain.dog.domain.Dog;
 import com.project.harupuppy.domain.dog.dto.DogUpdateRequest;
 import com.project.harupuppy.domain.dog.repository.DogRepository;
-import com.project.harupuppy.domain.user.dto.response.DogDetailResponse;
+import com.project.harupuppy.domain.dog.dto.DogDetailResponse;
 import com.project.harupuppy.global.common.exception.CustomException;
 import com.project.harupuppy.global.common.response.Response;
 import lombok.RequiredArgsConstructor;

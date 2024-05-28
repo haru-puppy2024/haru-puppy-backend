@@ -1,6 +1,6 @@
-package com.project.harupuppy.domain.user.dto.response;
+package com.project.harupuppy.domain.home.dto;
 
-import com.project.harupuppy.domain.user.domain.Home;
+import com.project.harupuppy.domain.home.domain.Home;
 
 public record HomeDetailResponse(
         String homeId,

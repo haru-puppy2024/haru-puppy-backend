@@ -1,7 +1,7 @@
 package com.project.harupuppy.domain.user.dto.request;
 
 import com.project.harupuppy.domain.dog.domain.Dog;
-import com.project.harupuppy.domain.user.domain.Home;
+import com.project.harupuppy.domain.home.domain.Home;
 import com.project.harupuppy.domain.user.domain.User;
 import com.project.harupuppy.domain.user.domain.UserRole;
 import jakarta.validation.constraints.NotBlank;

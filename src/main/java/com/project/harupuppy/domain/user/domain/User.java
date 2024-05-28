@@ -1,17 +1,16 @@
 package com.project.harupuppy.domain.user.domain;
 
 import com.project.harupuppy.domain.dog.domain.Dog;
-import com.project.harupuppy.domain.user.dto.UserUpdateRequest;
+import com.project.harupuppy.domain.home.domain.Home;
+import com.project.harupuppy.domain.user.dto.request.UserUpdateRequest;
 import com.project.harupuppy.global.utils.KoreanNickname;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
+@ToString(exclude = {"home", "dog"})
 @Table(name = "USERS")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
@@ -63,6 +62,7 @@ public class User {
 
     public void update(UserUpdateRequest updateRequest) {
         this.nickName = updateRequest.nickName();
+        this.imgUrl = updateRequest.imgUrl();
         this.userRole = updateRequest.userRole();
     }
 
