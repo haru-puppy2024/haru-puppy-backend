@@ -20,6 +20,7 @@ import java.util.List;
 @RequestMapping("/api/schedules")
 @RequiredArgsConstructor
 @Validated
+@CrossOrigin(originPatterns = "http://localhost:3000", maxAge = 3600)
 public class ScheduleController {
     private final ScheduleService scheduleService;
 
