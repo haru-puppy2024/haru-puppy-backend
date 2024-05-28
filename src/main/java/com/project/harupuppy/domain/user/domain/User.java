@@ -62,6 +62,7 @@ public class User {
 
     public void update(UserUpdateRequest updateRequest) {
         this.nickName = updateRequest.nickName();
+        this.imgUrl = updateRequest.imgUrl();
         this.userRole = updateRequest.userRole();
     }
 
