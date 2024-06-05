@@ -1,9 +1,11 @@
 package com.project.harupuppy.global.utils;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 
 public class DateUtils {
     static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -33,4 +35,36 @@ public class DateUtils {
     public static LocalDate parseDate(String date) {
         return LocalDate.parse(date, dateFormatter);
     }
+
+    public static LocalDate getLastWeekMondayDate() {
+        LocalDate today = LocalDate.now();
+        DayOfWeek dayOfWeek = today.getDayOfWeek();
+        if (dayOfWeek == DayOfWeek.MONDAY) {
+            return today.minusWeeks(1);
+        } else {
+            return today.minusWeeks(1).with(TemporalAdjusters.previous(DayOfWeek.MONDAY));
+        }
+    }
+
+    public static LocalDate getLastWeekSundayDate() {
+        LocalDate today = LocalDate.now();
+        DayOfWeek dayOfWeek = today.getDayOfWeek();
+        if (dayOfWeek == DayOfWeek.SUNDAY) {
+            return today.minusWeeks(1);
+        } else {
+            return today.minusDays(dayOfWeek.getValue());
+        }
+    }
+
+    public static LocalDate getThisWeekStartDate() {
+        LocalDate today = LocalDate.now();
+        int dayOfWeek = today.getDayOfWeek().getValue();
+        int daysToSubtract = dayOfWeek - 1;
+        return today.minusDays(daysToSubtract);
+    }
+
+    public static LocalDate getTodayDate() {
+        return LocalDate.now();
+    }
+
 }

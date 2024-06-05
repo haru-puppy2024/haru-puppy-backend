@@ -1,7 +1,7 @@
 package com.project.harupuppy.domain.schedule.application;
 
-import com.project.harupuppy.domain.schedule.dao.ScheduleRepository;
-import com.project.harupuppy.domain.schedule.dao.UserScheduleRepository;
+import com.project.harupuppy.domain.schedule.repository.ScheduleRepository;
+import com.project.harupuppy.domain.schedule.repository.UserScheduleRepository;
 import com.project.harupuppy.domain.schedule.domain.RepeatType;
 import com.project.harupuppy.domain.schedule.domain.Schedule;
 import com.project.harupuppy.domain.schedule.domain.UserSchedule;
