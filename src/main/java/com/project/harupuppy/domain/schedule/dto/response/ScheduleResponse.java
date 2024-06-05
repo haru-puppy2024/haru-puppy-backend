@@ -3,14 +3,16 @@ package com.project.harupuppy.domain.schedule.dto.response;
 import com.project.harupuppy.domain.schedule.domain.*;
 import com.project.harupuppy.domain.user.domain.User;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public record ScheduleResponse(
         Long scheduleId,
         ScheduleType scheduleType,
-        LocalDateTime scheduleDateTime,
+        LocalDate scheduleDate,
+        LocalTime scheduleTime,
         String homeId,
         List<Long> mates,
         String repeatId,
@@ -24,7 +26,8 @@ public record ScheduleResponse(
         return new ScheduleResponse(
                 schedule.getId(),
                 schedule.getScheduleType(),
-                schedule.getScheduleDateTime(),
+                schedule.getScheduleDateTime().toLocalDate(),
+                schedule.getScheduleDateTime().toLocalTime(),
                 schedule.getHomeId(),
                 schedule.getMates().stream()
                         .map(UserSchedule::getUser)
@@ -39,3 +42,4 @@ public record ScheduleResponse(
         );
     }
 }
+
