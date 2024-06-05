@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -173,6 +174,22 @@ public class ScheduleService {
 
         List<Schedule> scheduleList = scheduleRepository.findAllByHomeIdAndScheduleDateTimeBetweenOrderByScheduleDateTimeAsc(
                         homeId, startDate, endDate)
+                .orElseThrow(() -> new CustomException(Response.ErrorCode.NOT_FOUND_SCHEDULE));
+
+        return scheduleList.stream()
+                .map(ScheduleResponse::of)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 특정 일의 스케줄 목록 조회
+     */
+    public List<ScheduleResponse> findSchedulesByDay(Long userId, int year, int month, int day) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(Response.ErrorCode.NOT_FOUND_USER));
+        String homeId = user.getHome().getHomeId();
+        LocalDate date = LocalDate.of(year, month, day);
+
+        List<Schedule> scheduleList = scheduleRepository.findScheduleByDate(homeId, date)
                 .orElseThrow(() -> new CustomException(Response.ErrorCode.NOT_FOUND_SCHEDULE));
 
         return scheduleList.stream()

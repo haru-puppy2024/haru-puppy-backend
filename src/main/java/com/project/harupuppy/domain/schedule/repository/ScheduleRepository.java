@@ -16,6 +16,14 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     Optional<List<Schedule>> findAllByRepeatIdAndScheduleDateTimeGreaterThanEqual(String repeatId, LocalDateTime scheduleDateTime);
     Optional<List<Schedule>> findAllByHomeIdAndScheduleDateTimeBetweenOrderByScheduleDateTimeAsc(String homeId, LocalDateTime startDate, LocalDateTime endDate);
 
+    @Query("SELECT s FROM Schedule s " +
+            "WHERE s.homeId = :homeId " +
+            "AND DATE(s.scheduleDateTime) = :date")
+    Optional<List<Schedule>> findScheduleByDate(
+            @Param("homeId") String homeId,
+            @Param("date") LocalDate date
+    );
+
     @Query("SELECT COUNT(s) FROM Schedule s " +
             "WHERE s.homeId = :homeId " +
             "AND s.scheduleType = :scheduleType " +

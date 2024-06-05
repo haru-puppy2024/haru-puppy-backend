@@ -66,15 +66,20 @@ public class ScheduleController {
     }
 
     /**
-     * 특정 월의 스케줄 목록 조회
+     * 특정 월 또는 특정 일의 스케줄 목록 조회
      */
     @GetMapping("")
     public ApiResponse<List<ScheduleResponse>> getSchedules(
             @NotNull(message = "조회 연도는 필수입니다") @RequestParam("year") Integer year,
-            @NotNull(message = "조회 월은 필수입니다") @RequestParam("month") Integer month) {
+            @NotNull(message = "조회 월은 필수입니다") @RequestParam("month") Integer month,
+            @RequestParam(value = "day", required = false) Integer day) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetail user = (UserDetail) principal;
-        return ApiResponse.ok(Response.Status.RETRIEVE, scheduleService.findSchedulesByMonth(user.getUserId(), year, month));
+        if (day != null) {
+            return ApiResponse.ok(Response.Status.RETRIEVE, scheduleService.findSchedulesByDay(user.getUserId(), year, month, day));
+        } else {
+            return ApiResponse.ok(Response.Status.RETRIEVE, scheduleService.findSchedulesByMonth(user.getUserId(), year, month));
+        }
     }
 
     /**
