@@ -14,7 +14,7 @@ import com.project.harupuppy.domain.dog.dto.DogDetailResponse;
 import com.project.harupuppy.domain.home.dto.HomeDetailResponse;
 import com.project.harupuppy.domain.user.dto.response.UserCreateResponse;
 import com.project.harupuppy.domain.user.dto.response.UserDetailResponse;
-import com.project.harupuppy.domain.user.repository.HomeRepository;
+import com.project.harupuppy.domain.home.repository.HomeRepository;
 import com.project.harupuppy.domain.user.repository.UserRepository;
 import com.project.harupuppy.global.common.exception.CustomException;
 import com.project.harupuppy.global.common.response.Response;
