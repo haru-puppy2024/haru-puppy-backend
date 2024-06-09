@@ -1,6 +1,8 @@
 package com.project.harupuppy.domain.schedule.api;
 
 import com.project.harupuppy.domain.schedule.application.ScheduleService;
+import com.project.harupuppy.domain.schedule.dto.request.CompletedScheduleCreateRequest;
+import com.project.harupuppy.domain.schedule.dto.request.CompletedScheduleDeleteRequest;
 import com.project.harupuppy.domain.schedule.dto.request.ScheduleCreateRequest;
 import com.project.harupuppy.domain.schedule.dto.request.ScheduleUpdateRequest;
 import com.project.harupuppy.domain.schedule.dto.response.ScheduleResponse;
@@ -32,6 +34,27 @@ public class ScheduleController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetail user = (UserDetail) principal;
         return ApiResponse.ok(Response.Status.CREATE, scheduleService.create(dto, user.getUserId()));
+    }
+
+    /**
+     * 완료된 스케줄 추가
+     */
+    @PostMapping("/complete")
+    public ApiResponse<ScheduleResponse> createCompletedSchedule(@RequestBody @Valid CompletedScheduleCreateRequest dto) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetail user = (UserDetail) principal;
+        return ApiResponse.ok(Response.Status.CREATE, scheduleService.createCompletedSchedule(dto, user.getUserId()));
+    }
+
+    /**
+     * 완료된 오늘의 가장 최근 스케줄 삭제
+     */
+    @DeleteMapping("/complete")
+    public ApiResponse<Void> deleteCompletedSchedule(@RequestBody @Valid CompletedScheduleDeleteRequest dto) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetail user = (UserDetail) principal;
+        scheduleService.deleteCompletedSchedule(dto, user.getUserId());
+        return ApiResponse.ok(Response.Status.DELETE);
     }
 
     /**

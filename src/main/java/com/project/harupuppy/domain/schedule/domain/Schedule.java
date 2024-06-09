@@ -62,7 +62,8 @@ public class Schedule extends DateEntity {
             String repeatId,
             RepeatType repeatType,
             AlertType alertType,
-            String memo) {
+            String memo,
+            boolean isActive) {
         this.scheduleType = scheduleType;
         this.scheduleDateTime = scheduleDateTime;
         this.homeId = homeId;
@@ -71,6 +72,7 @@ public class Schedule extends DateEntity {
         this.repeatType = repeatType;
         this.alertType = alertType;
         this.memo = memo;
+        this.isActive = isActive;
     }
 
     public static Schedule of(Schedule schedule, String repeatId, LocalDateTime repeatDateTime) {

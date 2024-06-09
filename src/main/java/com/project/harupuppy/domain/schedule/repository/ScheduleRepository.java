@@ -18,6 +18,21 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
     @Query("SELECT s FROM Schedule s " +
             "WHERE s.homeId = :homeId " +
+            "AND s.scheduleType = :scheduleType " +
+            "AND DATE(s.scheduleDateTime) = :date " +
+            "AND s.isActive = :isActive " +
+            "AND s.repeatType = 'NONE' " +
+            "AND s.alertType = 'NONE' " +
+            "ORDER BY s.scheduleDateTime DESC")
+    Optional<Schedule> findTodayLatestSchedule(
+            @Param("homeId") String homeId,
+            @Param("scheduleType") ScheduleType scheduleType,
+            @Param("date") LocalDate date,
+            @Param("isActive") boolean isActive
+    );
+
+    @Query("SELECT s FROM Schedule s " +
+            "WHERE s.homeId = :homeId " +
             "AND DATE(s.scheduleDateTime) = :date")
     Optional<List<Schedule>> findScheduleByDate(
             @Param("homeId") String homeId,
