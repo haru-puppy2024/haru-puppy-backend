@@ -1,14 +1,16 @@
 package com.project.harupuppy.domain.schedule.application;
 
-import com.project.harupuppy.domain.schedule.repository.ScheduleRepository;
-import com.project.harupuppy.domain.schedule.repository.UserScheduleRepository;
 import com.project.harupuppy.domain.schedule.domain.RepeatType;
 import com.project.harupuppy.domain.schedule.domain.Schedule;
 import com.project.harupuppy.domain.schedule.domain.UserSchedule;
 import com.project.harupuppy.domain.schedule.dto.UserScheduleDto;
+import com.project.harupuppy.domain.schedule.dto.request.CompletedScheduleCreateRequest;
+import com.project.harupuppy.domain.schedule.dto.request.CompletedScheduleDeleteRequest;
 import com.project.harupuppy.domain.schedule.dto.request.ScheduleCreateRequest;
 import com.project.harupuppy.domain.schedule.dto.request.ScheduleUpdateRequest;
 import com.project.harupuppy.domain.schedule.dto.response.ScheduleResponse;
+import com.project.harupuppy.domain.schedule.repository.ScheduleRepository;
+import com.project.harupuppy.domain.schedule.repository.UserScheduleRepository;
 import com.project.harupuppy.domain.user.domain.User;
 import com.project.harupuppy.domain.user.repository.UserRepository;
 import com.project.harupuppy.global.common.exception.CustomException;
@@ -21,10 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -114,6 +113,39 @@ public class ScheduleService {
             }
         }
         return repeatedDateTimes;
+    }
+
+    /**
+     * 완료된 스케줄 추가
+     */
+    @Transactional
+    public ScheduleResponse createCompletedSchedule(CompletedScheduleCreateRequest dto, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(Response.ErrorCode.NOT_FOUND_USER));
+        String homeId = user.getHome().getHomeId();
+
+        Schedule schedule = CompletedScheduleCreateRequest.fromDto(dto, homeId);
+        UserSchedule userSchedule = new UserSchedule(user, schedule);
+        schedule.addMate(userSchedule);
+        scheduleRepository.save(schedule);
+
+        return ScheduleResponse.of(schedule);
+    }
+
+    /**
+     * 완료된 오늘의 가장 최근 스케줄 삭제
+     */
+    @Transactional
+    public void deleteCompletedSchedule(CompletedScheduleDeleteRequest dto, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(Response.ErrorCode.NOT_FOUND_USER));
+        String homeId = user.getHome().getHomeId();
+
+        Optional<Schedule> todayLatestSchedule = scheduleRepository.findTodayLatestSchedule(homeId, dto.scheduleType(), LocalDate.now(), false);
+        if (todayLatestSchedule.isPresent()) {
+            Schedule todaySchedule = todayLatestSchedule.get();
+            scheduleRepository.delete(todaySchedule);
+        } else {
+            throw new CustomException(Response.ErrorCode.NOT_FOUND_SCHEDULE);
+        }
     }
 
     /**
