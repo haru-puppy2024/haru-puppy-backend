@@ -26,7 +26,9 @@ public class AuthController {
     public ApiResponse<LoginResponse> login(@PathVariable("provider") String provider,
                                             @RequestParam("code") String code) {
         LoginResponse response = userFacadeService.login(provider, code);
-        return ApiResponse.ok(Response.Status.CREATE, response);
+        Response.Status status = response.response().isAlreadyRegistered()
+                ? Response.Status.RETRIEVE : Response.Status.CREATE;
+        return ApiResponse.ok(status, response);
     }
 
     /**
