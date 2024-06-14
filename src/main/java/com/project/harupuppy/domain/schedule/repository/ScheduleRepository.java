@@ -3,6 +3,7 @@ package com.project.harupuppy.domain.schedule.repository;
 import com.project.harupuppy.domain.schedule.domain.Schedule;
 import com.project.harupuppy.domain.schedule.domain.ScheduleType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -15,6 +16,13 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     Optional<List<Schedule>> findAllByRepeatIdAndScheduleDateTimeAfter(String repeatId, LocalDateTime scheduleDateTime);
     Optional<List<Schedule>> findAllByRepeatIdAndScheduleDateTimeGreaterThanEqual(String repeatId, LocalDateTime scheduleDateTime);
     Optional<List<Schedule>> findAllByHomeIdAndScheduleDateTimeBetweenOrderByScheduleDateTimeAsc(String homeId, LocalDateTime startDate, LocalDateTime endDate);
+
+    @Query("SELECT s.id FROM Schedule s WHERE s.homeId = :homeId")
+    List<Long> findScheduleIdsByHomeId(@Param("homeId") String homeId);
+
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Query(value = "DELETE FROM Schedule s where s.homeId = :homeId")
+    void deleteAllByHomeId(@Param("homeId") String homeId);
 
     @Query("SELECT s FROM Schedule s " +
             "WHERE s.homeId = :homeId " +
