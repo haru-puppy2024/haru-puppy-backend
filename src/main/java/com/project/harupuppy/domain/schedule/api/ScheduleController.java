@@ -82,7 +82,7 @@ public class ScheduleController {
     /**
      * 스케줄 상태 변경
      */
-    @PutMapping("/{scheduleId}/status")
+    @PatchMapping("/{scheduleId}/status")
     public ApiResponse<ScheduleResponse> updateStatus(@NotNull(message = "스케줄 상태는 필수입니다") @RequestParam Boolean active,
                                                       @NotNull(message = "스케줄 아이디는 필수입니다") @PathVariable Long scheduleId) {
         return ApiResponse.ok(Response.Status.UPDATE, scheduleService.updateStatus(scheduleId, active));
