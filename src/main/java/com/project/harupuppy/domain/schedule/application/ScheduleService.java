@@ -72,7 +72,7 @@ public class ScheduleService {
         LocalDateTime endDate = startDate.plusYears(1).withMonth(12).withDayOfMonth(31); // 1년 후 연말까지
 
         String repeatId = UUID.randomUUID().toString();
-        schedule.setRepeatId(repeatId);// 등록 일자의 스케줄에도 repeat id 부여
+        schedule.updateRepeatId(repeatId);// 등록 일자의 스케줄에도 repeat id 부여
 
         List<LocalDateTime> dateTimesUntilNextYear = getDateTimesUntilNextYear(
                 schedule.getRepeatType(), startDate, endDate, new ArrayList<>());
