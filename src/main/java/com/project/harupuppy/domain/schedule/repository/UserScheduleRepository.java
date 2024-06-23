@@ -12,4 +12,8 @@ public interface UserScheduleRepository extends JpaRepository<UserSchedule, Long
     @Modifying
     @Query("DELETE FROM UserSchedule us WHERE us.schedule.id IN :scheduleIds")
     void deleteByScheduleIds(@Param("scheduleIds") List<Long> scheduleIds);
+
+    @Modifying
+    @Query("DELETE FROM UserSchedule us WHERE us.userScheduleId IN :ids")
+    void deleteByIds(@Param("ids") List<Long> ids);
 }

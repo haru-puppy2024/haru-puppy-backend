@@ -6,6 +6,7 @@ import com.project.harupuppy.domain.schedule.dto.request.CompletedScheduleDelete
 import com.project.harupuppy.domain.schedule.dto.request.ScheduleCreateRequest;
 import com.project.harupuppy.domain.schedule.dto.request.ScheduleUpdateRequest;
 import com.project.harupuppy.domain.schedule.dto.response.ScheduleResponse;
+import com.project.harupuppy.domain.schedule.dto.response.ScheduleUpdateResponse;
 import com.project.harupuppy.domain.user.domain.UserDetail;
 import com.project.harupuppy.global.common.response.ApiResponse;
 import com.project.harupuppy.global.common.response.Response;
@@ -58,16 +59,6 @@ public class ScheduleController {
     }
 
     /**
-     * 반복되지 않는 단일 스케줄 수정
-     */
-    @PutMapping("/{scheduleId}")
-    public ApiResponse<ScheduleResponse> update(@NotNull(message = "스케줄 아이디는 필수입니다") @PathVariable Long scheduleId,
-                                                @NotNull @RequestBody @Valid ScheduleUpdateRequest dto,
-                                                @NotNull(message = "반복 스케줄 수정여부는 필수입니다") @RequestParam(defaultValue = "false") Boolean all) {
-        return ApiResponse.ok(Response.Status.UPDATE, scheduleService.update(scheduleId, dto, all));
-    }
-
-    /**
      * 스케줄 삭제
      * all=false 반복되지 않는 단일 스케줄 삭제
      * all=true 반복되는 스케줄 삭제
@@ -77,6 +68,18 @@ public class ScheduleController {
                                     @NotNull @RequestParam(defaultValue = "false") Boolean all) {
         scheduleService.delete(scheduleId, all);
         return ApiResponse.ok(Response.Status.DELETE);
+    }
+
+    /**
+     * 스케줄 수정
+     * all=false 반복되지 않는 단일 스케줄 수정
+     * all=true 반복되는 스케줄 수정
+     */
+    @PatchMapping("/{scheduleId}")
+    public ApiResponse<ScheduleUpdateResponse> update(@NotNull(message = "스케줄 아이디는 필수입니다") @PathVariable Long scheduleId,
+                                                      @NotNull(message = "반복 스케줄 수정여부는 필수입니다") @RequestParam(defaultValue = "false") Boolean all,
+                                                      @NotNull @RequestBody @Valid ScheduleUpdateRequest dto) {
+        return ApiResponse.ok(Response.Status.UPDATE, scheduleService.update(scheduleId, dto, all));
     }
 
     /**
