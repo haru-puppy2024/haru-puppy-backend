@@ -2,6 +2,7 @@ package com.project.harupuppy.domain.schedule.repository;
 
 import com.project.harupuppy.domain.schedule.domain.Schedule;
 import com.project.harupuppy.domain.schedule.domain.ScheduleType;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -32,11 +33,12 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
             "AND s.repeatType = 'NONE' " +
             "AND s.alertType = 'NONE' " +
             "ORDER BY s.scheduleDateTime DESC")
-    Optional<Schedule> findTodayLatestSchedule(
+    List<Schedule> findTodayLatestSchedule(
             @Param("homeId") String homeId,
             @Param("scheduleType") ScheduleType scheduleType,
             @Param("date") LocalDate date,
-            @Param("isActive") boolean isActive
+            @Param("isActive") boolean isActive,
+            Pageable pageable
     );
 
     @Query("SELECT s FROM Schedule s " +
@@ -78,22 +80,25 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
             "AND DATE(s.scheduleDateTime) <= :date " +
             "AND s.isActive = :isActive " +
             "ORDER BY s.scheduleDateTime DESC")
-    Optional<Schedule> findTopByHomeIdAndScheduleTypeAndDateLessThanEqualOrderByDateDesc(
+    List<Schedule> findTopByHomeIdAndScheduleTypeAndDateLessThanEqualOrderByDateDesc(
             @Param("homeId") String homeId,
             @Param("scheduleType") ScheduleType scheduleType,
             @Param("date") LocalDate date,
-            @Param("isActive") boolean isActive
+            @Param("isActive") boolean isActive,
+            Pageable pageable
     );
 
     @Query("SELECT COUNT(s) FROM Schedule s " +
             "JOIN s.mates m " +
             "WHERE s.homeId = :homeId " +
+            "AND s.scheduleType = :scheduleType " +
             "AND m.user.userId = :userId " +
             "AND DATE(s.scheduleDateTime) BETWEEN :startDate AND :endDate " +
             "AND s.isActive = :isActive")
     int countByHomeIdAndUserIdAndDateBetweenAndIsActive(
             @Param("homeId") String homeId,
             @Param("userId") Long userId,
+            @Param("scheduleType") ScheduleType scheduleType,
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate,
             @Param("isActive") boolean isActive

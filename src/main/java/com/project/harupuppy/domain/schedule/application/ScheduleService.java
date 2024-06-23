@@ -17,6 +17,8 @@ import com.project.harupuppy.global.common.exception.CustomException;
 import com.project.harupuppy.global.common.response.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -138,10 +140,10 @@ public class ScheduleService {
     public void deleteCompletedSchedule(CompletedScheduleDeleteRequest dto, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(Response.ErrorCode.NOT_FOUND_USER));
         String homeId = user.getHome().getHomeId();
-
-        Optional<Schedule> todayLatestSchedule = scheduleRepository.findTodayLatestSchedule(homeId, dto.scheduleType(), LocalDate.now(), false);
-        if (todayLatestSchedule.isPresent()) {
-            Schedule todaySchedule = todayLatestSchedule.get();
+        Pageable limit = PageRequest.of(0, 1);
+        List<Schedule> todayLatestSchedule = scheduleRepository.findTodayLatestSchedule(homeId, dto.scheduleType(), LocalDate.now(), false, limit);
+        if (!todayLatestSchedule.isEmpty()) {
+            Schedule todaySchedule = todayLatestSchedule.stream().findFirst().get();
             scheduleRepository.delete(todaySchedule);
         } else {
             throw new CustomException(Response.ErrorCode.NOT_FOUND_SCHEDULE);
