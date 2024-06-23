@@ -9,6 +9,7 @@ public class Response {
     @RequiredArgsConstructor
     public enum ErrorCode {
         BAD_REQUEST(HttpStatus.BAD_REQUEST, "비어 있는 곳이 있습니다"),
+        BAD_REQUEST_SCHEDULE(HttpStatus.BAD_REQUEST, "잘못된 스케줄 수정 요청 입니다."),
 
         INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "유효하지 않은 토큰입니다"),
         EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, "요청 토큰이 만료되었습니다"),

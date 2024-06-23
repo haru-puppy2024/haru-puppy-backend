@@ -101,10 +101,27 @@ public class Schedule extends DateEntity {
     public void update(ScheduleUpdateRequest dto, List<UserSchedule> mates) {
         this.scheduleType = dto.scheduleType();
         this.scheduleDateTime = DateUtils.parseDateTime(dto.scheduleDate(), dto.scheduleTime());
-        this.mates = mates;
         this.repeatType = dto.repeatType();
         this.alertType = dto.alertType();
         this.memo = dto.memo();
+        updateMates(mates);
+    }
+
+    private void updateMates(List<UserSchedule> newMates) {
+        // 기존 mates 리스트에서 삭제된 항목 처리
+        List<UserSchedule> matesToRemove = this.mates.stream()
+                .filter(mate -> newMates.stream()
+                        .noneMatch(newMate -> newMate.getUser().getUserId().equals(mate.getUser().getUserId())))
+                .toList();
+
+        // 새로 추가된 mates 항목 처리
+        List<UserSchedule> matesToAdd = newMates.stream()
+                .filter(newMate -> this.mates.stream()
+                        .noneMatch(mate -> mate.getUser().getUserId().equals(newMate.getUser().getUserId())))
+                .toList();
+
+        this.mates.removeAll(matesToRemove);
+        this.mates.addAll(matesToAdd);
     }
 
     public void done() {
@@ -121,6 +138,11 @@ public class Schedule extends DateEntity {
 
     public void updateRepeatId(String repeatId) {
         this.repeatId = repeatId;
+    }
+
+    public void convertToSingleSchedule() {
+        this.repeatId = null;
+        this.repeatType = RepeatType.NONE;
     }
 
     public void updateMate(List<UserSchedule> mates) {
