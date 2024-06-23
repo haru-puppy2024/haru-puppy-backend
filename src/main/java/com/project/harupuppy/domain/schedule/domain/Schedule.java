@@ -115,11 +115,11 @@ public class Schedule extends DateEntity {
         isActive = false;
     }
 
-    public void setScheduleDateTime(LocalDateTime dateTime) {
+    public void updateScheduleDateTime(LocalDateTime dateTime) {
         this.scheduleDateTime = dateTime;
     }
 
-    public void setRepeatId(String repeatId) {
+    public void updateRepeatId(String repeatId) {
         this.repeatId = repeatId;
     }
 
