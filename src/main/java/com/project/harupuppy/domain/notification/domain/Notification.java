@@ -1,22 +1,33 @@
 package com.project.harupuppy.domain.notification.domain;
 
+import com.project.harupuppy.domain.user.domain.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "NOTIFICATIONS")
 @Getter
-@NoArgsConstructor
-@Table(name = "notification")
-public class Notification extends TimeAuditingEntity {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notification_id")
     private Long id;
 
-    @Column(nullable = false)
-    private String content; // 알림 내용
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private NotificationType notificationType;
+
+    @NotBlank
+    private String content;
 
     @Column(nullable = false)
     private String url; // 관련 링크
@@ -24,9 +35,9 @@ public class Notification extends TimeAuditingEntity {
     @Column(nullable = false)
     private Boolean isRead; // 알림 확인 여부
 
-    @Column(nullable = false)
-    @Enumerated(value = EnumType.STRING)
-    private NotificationType notificationType;
+    @Column(name = "send_date")
+    @CreatedDate
+    private LocalDateTime sendDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

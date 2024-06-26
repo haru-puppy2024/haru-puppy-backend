@@ -4,8 +4,12 @@ import com.project.harupuppy.domain.notification.domain.Notification;
 import com.project.harupuppy.domain.notification.domain.NotificationType;
 import com.project.harupuppy.domain.notification.dto.response.NotificationResponseDto;
 import com.project.harupuppy.domain.notification.repository.EmitterRepository;
+import com.project.harupuppy.domain.notification.repository.NotificationRepository;
+import com.project.harupuppy.domain.user.domain.User;
 import com.project.harupuppy.global.common.CustomConst;
 import com.project.harupuppy.global.common.exception.CustomException;
+import com.project.harupuppy.global.common.response.Response;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +25,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class NotificationService {
     private final EmitterRepository emitterRepository;
-//    private final NotificationRepository notificationRepository;
+    private final NotificationRepository notificationRepository;
+    private final EntityManager entityManager;
 
     /** 알림 구독 요청 */
     @Transactional
@@ -76,7 +81,7 @@ public class NotificationService {
     @Transactional
     public void send(Long receiverId, NotificationType notificationType, String content, String url) {
         Notification notification = Notification.builder()
-                .receiver(em.getReference(User.class, receiverId))
+                .receiver(entityManager.getReference(User.class, receiverId))
                 .notificationType(notificationType)
                 .content(content)
                 .url(url)
@@ -94,24 +99,34 @@ public class NotificationService {
     }
 
     /** 알림 목록 조회 */
-    public List<NotificationResponseDto> findNotification(Long userId){
+    public List<NotificationResponseDto> findNotificationList(Long userId){
         List<Notification> notificationList = notificationRepository.findByUserId(userId);
 
         return notificationList.stream().map(NotificationResponseDto::new).collect(Collectors.toList());
     }
 
-    /** 알림 확인 */
+    /** 알림 단건 조회 */
     @Transactional
-    public void checkNotification(Long userId, Long notificationId){
+    public NotificationResponseDto findNotification(Long userId, Long notificationId){
         Notification notification = notificationRepository.findById(notificationId)
-                .orElseThrow(() -> new CustomException(ErrorCode.NOTIFICATION_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(Response.ErrorCode.NOT_FOUND_NOTIFICATION));
 
         // 알림을 수신한 유저가 맞는지 체크
-        if (!notification.getReceiver().getId().equals(userId)){
-            throw new CustomException(ErrorCode.NOTIFICATION_NOT_FOUND);
+        if (!notification.getReceiver().getUserId().equals(userId)){
+            throw new CustomException(Response.ErrorCode.NOT_FOUND_NOTIFICATION);
         }
 
         notification.checkNotification();
+
+        return new NotificationResponseDto(notification);
     }
+
+//    private final ApplicationEventPublisher eventPublisher;
+//
+//    public void alarmSend(Long userId, Long notificationId){
+//        eventPublisher.publishEvent(new NotificationPublishDto(
+//                userId, NotificationType.SCHEDULE, "알림 내용", "url"
+//        ));
+//    }
 
 }

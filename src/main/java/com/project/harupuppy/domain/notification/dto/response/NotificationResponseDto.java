@@ -1,5 +1,7 @@
 package com.project.harupuppy.domain.notification.dto.response;
 
+import com.project.harupuppy.domain.notification.domain.Notification;
+import com.project.harupuppy.domain.notification.domain.NotificationType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

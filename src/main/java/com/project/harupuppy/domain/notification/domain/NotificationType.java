@@ -1,5 +1,12 @@
 package com.project.harupuppy.domain.notification.domain;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public enum NotificationType {
-    TRANSACTION, CHAT
+    SCHEDULE("일정 알림"),
+    SYSTEM("시스템 알림");
+    private final String desc;
 }
