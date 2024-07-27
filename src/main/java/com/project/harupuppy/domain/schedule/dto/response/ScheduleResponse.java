@@ -5,6 +5,7 @@ import com.project.harupuppy.domain.user.domain.User;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,11 +24,17 @@ public record ScheduleResponse(
         boolean isDeleted
 ) {
     public static ScheduleResponse of(Schedule schedule) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        LocalDate formattedDate = LocalDate.parse(schedule.getScheduleDateTime().toLocalDate().format(dateFormatter), dateFormatter);
+        LocalTime formattedTime = LocalTime.parse(schedule.getScheduleDateTime().toLocalTime().format(timeFormatter), timeFormatter);
+
         return new ScheduleResponse(
                 schedule.getId(),
                 schedule.getScheduleType(),
-                schedule.getScheduleDateTime().toLocalDate(),
-                schedule.getScheduleDateTime().toLocalTime(),
+                formattedDate,
+                formattedTime,
                 schedule.getHomeId(),
                 schedule.getMates().stream()
                         .map(UserSchedule::getUser)
