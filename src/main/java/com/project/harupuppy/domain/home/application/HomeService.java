@@ -16,6 +16,8 @@ import com.project.harupuppy.global.common.response.Response;
 import com.project.harupuppy.global.utils.DateUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +25,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -78,10 +79,11 @@ public class HomeService {
     }
 
     private LocalDate getLastScheduleDate(String homeId, ScheduleType type) {
-        Optional<Schedule> lastSchedule = scheduleRepository.findTopByHomeIdAndScheduleTypeAndDateLessThanEqualOrderByDateDesc(
-                homeId, type, LocalDate.now(), false
+        Pageable limit = PageRequest.of(0, 1);
+        List<Schedule> lastSchedule = scheduleRepository.findTopByHomeIdAndScheduleTypeAndDateLessThanEqualOrderByDateDesc(
+                homeId, type, LocalDate.now(), false, limit
         );
-        return lastSchedule.map(Schedule::getScheduleDateTime)
+        return lastSchedule.stream().findFirst().map(Schedule::getScheduleDateTime)
                 .map(LocalDateTime::toLocalDate)
                 .orElse(null);
     }
@@ -91,7 +93,7 @@ public class HomeService {
         return mates.stream()
                 .map(mate -> {
                     int mateScheduleCount = scheduleRepository.countByHomeIdAndUserIdAndDateBetweenAndIsActive(
-                            homeId, mate.getUserId(), DateUtils.getThisWeekStartDate(), DateUtils.getTodayDate(), false
+                            homeId, mate.getUserId(), ScheduleType.WALK, DateUtils.getThisWeekStartDate(), DateUtils.getTodayDate(), false
                     );
                     return RankingDto.of(mate, mateScheduleCount);
                 })

@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 @Validated
-@CrossOrigin(originPatterns = "http://localhost:3000", maxAge = 3600)
 public class UserController {
     private final UserFacadeService facadeService;
     private final UserService userService;
