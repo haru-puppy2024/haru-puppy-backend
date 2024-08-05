@@ -53,7 +53,7 @@ public class AuthenticationConfig {
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:3000");
         config.addAllowedOrigin("http://localhost:8080");
-        config.addAllowedOrigin("https://haru-puppy-front.vercel.app");
+        config.addAllowedOrigin("https://haru-puppy-frontend.vercel.app");
         config.setAllowedMethods(Arrays.asList("HEAD", "POST", "GET", "PATCH", "DELETE", "PUT", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
         config.setMaxAge(3600L);
