@@ -26,7 +26,6 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 @Configuration
 public class AuthenticationConfig {
-    private final CorsConfigurationSource corsConfigurationSource;
     private final UserService userService;
     private final JwtTokenUtils jwtTokenUtils;
 
@@ -34,7 +33,7 @@ public class AuthenticationConfig {
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .httpBasic(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors.configurationSource(corsConfigurationSource))
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .formLogin(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -51,9 +50,7 @@ public class AuthenticationConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:3000");
-        config.addAllowedOrigin("http://localhost:8080");
-        config.addAllowedOrigin("https://haru-puppy-frontend.vercel.app");
+        config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:8080", "https://haru-puppy-frontend.vercel.app"));
         config.setAllowedMethods(Arrays.asList("HEAD", "POST", "GET", "PATCH", "DELETE", "PUT", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
         config.setMaxAge(3600L);

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/dogs")
 @RequiredArgsConstructor
 @Validated
-@CrossOrigin(originPatterns = "http://localhost:3000", maxAge = 3600)
 public class DogController {
     private final DogService dogService;
 

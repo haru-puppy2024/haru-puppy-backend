@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 @Slf4j
-@CrossOrigin(origins = "*", exposedHeaders = {"Content-Disposition"})
 public class AuthController {
     private final UserFacadeService userFacadeService;
 
