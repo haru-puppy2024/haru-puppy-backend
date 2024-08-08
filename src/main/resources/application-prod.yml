@@ -26,7 +26,7 @@ spring:
           kakao:
             client-id: ${OAUTH_KAKAO_REST_API_KEY}
             client-secret: ${OAUTH_KAKAO_SECRET}
-            redirect-uri: "https://haru-puppy-frontend.vercel.app/auth/callback/kakao"
+            redirect-uri: ${OAUTH_KAKAO_PROD_REDIRECT_URI}
             scope:
               - account_email
             authorization-grant-type: authorization_code
