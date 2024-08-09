@@ -78,6 +78,7 @@ public class UserService {
             }
             homeRepository.delete(home);
         } else {
+            userScheduleRepository.deleteByUserId(userId);
             userRepository.delete(user);
         }
 
