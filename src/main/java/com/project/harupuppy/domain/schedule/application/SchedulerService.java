@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -40,7 +39,7 @@ public class SchedulerService {
 //    @Scheduled(cron = "0 0 * * * *") // 매 시간 실행
     @Scheduled(cron = "0 * * * * *") // 매 분 실행
     protected void scheduleUpcomingNotifications() {
-        log.info("cron 스케줄 실행 - 현재 시각: {}", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+//        log.info("cron 스케줄 실행 - 현재 시각: {}", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
         LocalDateTime now = LocalDateTime.now();
 //        LocalDateTime oneHourLater = now.plusHours(1);
         LocalDateTime fiveMinutesLater = now.plusMinutes(5);
@@ -56,7 +55,7 @@ public class SchedulerService {
                 )
         );
 
-        printScheduledTasks();
+//        printScheduledTasks();
     }
 
     private LocalDateTime calculateAlertTime(LocalDateTime dateTime, AlertType alertType) {
@@ -74,7 +73,7 @@ public class SchedulerService {
         // 기존 작업이 있는지 확인하고 취소
         ScheduledFuture<?> existingTask = scheduledTasks.get(schedule.getId());
         if (existingTask != null) {
-            log.info("작업이 중복 등록 되어 삭제 - 스케줄 ID : {}", schedule.getId());
+//            log.info("작업이 중복 등록 되어 삭제 - 스케줄 ID : {}", schedule.getId());
             existingTask.cancel(false);  // 현재 작업 취소
             scheduledTasks.remove(schedule.getId());  // 맵에서 삭제
         }
