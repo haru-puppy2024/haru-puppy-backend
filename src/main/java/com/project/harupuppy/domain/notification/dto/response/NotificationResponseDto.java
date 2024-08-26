@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -17,6 +19,7 @@ public class NotificationResponseDto {
     private String url;
     private Boolean isRead;
     private NotificationType notificationType;
+    private LocalDateTime sendDate;
 
     public NotificationResponseDto(Notification notification) {
         this.id = notification.getId();
@@ -24,5 +27,6 @@ public class NotificationResponseDto {
         this.url = notification.getUrl();
         this.isRead = notification.getIsRead();
         this.notificationType = notification.getNotificationType();
+        this.sendDate = notification.getSendDate();
     }
 }
