@@ -5,6 +5,7 @@ import com.project.harupuppy.domain.notification.domain.NotificationType;
 import com.project.harupuppy.domain.notification.dto.response.NotificationResponseDto;
 import com.project.harupuppy.domain.notification.repository.EmitterRepository;
 import com.project.harupuppy.domain.notification.repository.NotificationRepository;
+import com.project.harupuppy.domain.schedule.domain.ScheduleType;
 import com.project.harupuppy.domain.user.domain.User;
 import com.project.harupuppy.global.common.CustomConst;
 import com.project.harupuppy.global.common.exception.CustomException;
@@ -79,10 +80,11 @@ public class NotificationService {
 
     /** 알림 전송 메서드 */
     @Transactional
-    public void send(Long receiverId, NotificationType notificationType, String content, String url) {
+    public void send(Long receiverId, NotificationType notificationType, String content, String url, ScheduleType scheduleType) {
         Notification notification = Notification.builder()
                 .receiver(entityManager.getReference(User.class, receiverId))
                 .notificationType(notificationType)
+                .scheduleType(scheduleType)
                 .content(content)
                 .url(url)
                 .build();

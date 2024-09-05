@@ -2,6 +2,7 @@ package com.project.harupuppy.domain.notification.dto.response;
 
 import com.project.harupuppy.domain.notification.domain.Notification;
 import com.project.harupuppy.domain.notification.domain.NotificationType;
+import com.project.harupuppy.domain.schedule.domain.ScheduleType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class NotificationResponseDto {
     private String url;
     private Boolean isRead;
     private NotificationType notificationType;
+    private ScheduleType scheduleType;
     private LocalDateTime sendDate;
 
     public NotificationResponseDto(Notification notification) {
@@ -27,6 +29,7 @@ public class NotificationResponseDto {
         this.url = notification.getUrl();
         this.isRead = notification.getIsRead();
         this.notificationType = notification.getNotificationType();
+        this.scheduleType = notification.getScheduleType();
         this.sendDate = notification.getSendDate();
     }
 }

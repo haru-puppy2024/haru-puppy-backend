@@ -100,7 +100,8 @@ public class SchedulerService {
                 user.getUserId(),
                 NotificationType.SCHEDULE,
                 schedule.getMemo(),
-                "/api/schedules/" + schedule.getId()
+                "/api/schedules/" + schedule.getId(),
+                schedule.getScheduleType()
         );
     }
 
