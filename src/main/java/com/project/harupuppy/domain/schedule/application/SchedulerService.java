@@ -30,7 +30,7 @@ public class SchedulerService {
     private final ScheduleRepository scheduleRepository;
     private final NotificationService notificationService;
 
-    private final Map<Long, ScheduledFuture<?>> scheduledTasks = new ConcurrentHashMap<>();
+    private final Map<String, ScheduledFuture<?>> scheduledTasks = new ConcurrentHashMap<>();
 
     private static final int FIVE_MINUTES = 5;
     private static final int THIRTY_MINUTES = 30;
@@ -70,12 +70,13 @@ public class SchedulerService {
 
     @Async
     public void scheduleNotification(User user, Schedule schedule, LocalDateTime alertTime) {
+        String scheduleTasksKey = schedule.getId() + "_" + user.getUserId();
         // 기존 작업이 있는지 확인하고 취소
-        ScheduledFuture<?> existingTask = scheduledTasks.get(schedule.getId());
+        ScheduledFuture<?> existingTask = scheduledTasks.get(scheduleTasksKey);
         if (existingTask != null) {
 //            log.info("작업이 중복 등록 되어 삭제 - 스케줄 ID : {}", schedule.getId());
             existingTask.cancel(false);  // 현재 작업 취소
-            scheduledTasks.remove(schedule.getId());  // 맵에서 삭제
+            scheduledTasks.remove(scheduleTasksKey);  // 맵에서 삭제
         }
 
         // 새로운 작업 등록
@@ -84,14 +85,14 @@ public class SchedulerService {
                 sendNotification(user, schedule);
                 schedule.checkNotification();
                 scheduleRepository.save(schedule);
-                scheduledTasks.remove(schedule.getId());
+                scheduledTasks.remove(scheduleTasksKey);
             } catch (Exception e) {
                 log.error("Send notification failed.", e);
             }
         }, alertTime.atZone(ZoneId.systemDefault()).toInstant());
 
         // 새로운 작업을 맵에 저장
-        scheduledTasks.put(schedule.getId(), newTask);
+        scheduledTasks.put(scheduleTasksKey, newTask);
     }
 
     private void sendNotification(User user, Schedule schedule) {
