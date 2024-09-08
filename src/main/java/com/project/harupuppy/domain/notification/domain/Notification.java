@@ -1,5 +1,6 @@
 package com.project.harupuppy.domain.notification.domain;
 
+import com.project.harupuppy.domain.schedule.domain.AlertType;
 import com.project.harupuppy.domain.schedule.domain.ScheduleType;
 import com.project.harupuppy.domain.user.domain.User;
 import jakarta.persistence.*;
@@ -31,6 +32,10 @@ public class Notification {
     @Enumerated(EnumType.STRING)
     private ScheduleType scheduleType;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private AlertType alertType;
+
     @NotBlank
     private String content;
 
@@ -49,11 +54,12 @@ public class Notification {
     private User receiver; // 알림 받는 사람
 
     @Builder
-    public Notification(String content, String url, NotificationType notificationType, ScheduleType scheduleType, User receiver) {
+    public Notification(String content, String url, NotificationType notificationType, ScheduleType scheduleType, AlertType alertType, User receiver) {
         this.content = content;
         this.url = url;
         this.notificationType = notificationType;
         this.scheduleType = scheduleType;
+        this.alertType = alertType;
         this.isRead = false;
         this.sendDate = LocalDateTime.now();
         this.receiver = receiver;

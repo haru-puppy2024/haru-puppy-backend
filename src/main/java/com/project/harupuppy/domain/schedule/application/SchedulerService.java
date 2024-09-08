@@ -101,7 +101,8 @@ public class SchedulerService {
                 NotificationType.SCHEDULE,
                 schedule.getMemo(),
                 "/api/schedules/" + schedule.getId(),
-                schedule.getScheduleType()
+                schedule.getScheduleType(),
+                schedule.getAlertType()
         );
     }
 

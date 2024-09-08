@@ -17,6 +17,6 @@ public class NotificationListener {
     @Async
     public void handleNotification(NotificationPublishDto requestDto) {
         notificationService.send(requestDto.getReceiverId(), requestDto.getNotificationType(),
-                requestDto.getContent(), requestDto.getUrl(), requestDto.getScheduleType());
+                requestDto.getContent(), requestDto.getUrl(), requestDto.getScheduleType(), requestDto.getAlertType());
     }
 }
