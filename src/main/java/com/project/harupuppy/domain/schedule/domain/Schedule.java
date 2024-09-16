@@ -51,7 +51,9 @@ public class Schedule extends DateEntity {
     @Column(name = "is_deleted")
     private boolean isDeleted = false;
 
-    private boolean isActive = true;
+    private boolean isActive = true; // 완료 여부
+
+    private boolean notified = false;
 
     @Builder
     public Schedule(
@@ -151,5 +153,9 @@ public class Schedule extends DateEntity {
 
     public void addMate(UserSchedule mate) {
         mates.add(mate);
+    }
+
+    public void checkNotification() {
+        notified = true;
     }
 }
