@@ -1,6 +1,6 @@
 <div align="center">
   
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fharu-puppy2024&count_bg=%23404040&title_bg=%23D77B3C&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+<!-- [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fharu-puppy2024&count_bg=%23404040&title_bg=%23D77B3C&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) -->
 
 # **하루강아지** 🐶🗓️
 
@@ -31,7 +31,7 @@
 |   **FE 준미**   |   **FE 황혜명**   |  **BE 안세준**  |
 | :-----: | :-------: |  :----: |
 | <img width="180" alt="junmieee_profile_img" src="https://github.com/haru-puppy2024/.github/assets/87015026/c8d29dd3-1e40-499e-9089-396a47606d3f">  | <img width="180" alt="hyemyoung_hwang_profile_img" src="https://github.com/haru-puppy2024/.github/assets/87015026/9ab2c575-5328-4f71-ae6e-0515da170486">  | <img width="180" alt="asjjun_img" src="https://github.com/haru-puppy2024/.github/assets/87015026/d4e8a9c3-0120-4845-a9a0-932630ba88aa"> |
-**GitHub**: [junmieee](https://github.com/junmieee)  <br>**blog**: [블로그 링크]()   |   **GitHub**: [CosmicLatte009](https://github.com/CosmicLatte009) <br>**blog**: [깃헙 블로그](https://cosmiclatte009.github.io/blog/) | **GitHub**: [asjjun](https://github.com/asjjun) <br>**blog**: [블로그 링크]()   |  
+**GitHub**: [junmieee](https://github.com/junmieee)  <br>   |   **GitHub**: [CosmicLatte009](https://github.com/CosmicLatte009) <br>**blog**: [깃헙 블로그](https://cosmiclatte009.github.io/blog/) | **GitHub**: [asjjun](https://github.com/asjjun) <br>   |  
 
 ## 2. 개발 환경 및 배포 URL 🔗
 
@@ -46,12 +46,12 @@
 
 ## 3. 개발일정 🗓
 
-#### 기간 : 2024.04.15(월) ~ 2024.08 (진행중)
+#### 기간 : 2024.04.15(월) ~ 2024.08
 
 - 프로젝트 회의 : 04.15(월) ~ 04.25(목)
   - 🔗[API 문서](https://www.notion.so/API-1db717659bc54f4ebceb410edbd9df79), 기술스택 논의
 
-- 기능구현 : 04.26(금) ~ 08.nn()
+- 기능구현 : 04.26(금) ~ 08.18(일)
   - 🔗[스프린트](https://www.notion.so/Sprint-43750bc47db846898d2e6c53eb8dbde5)
 
 <!-- ## 4. 프로젝트 구조 🗂 -->
@@ -113,17 +113,17 @@
 
 
 
-
-## 7. 남은 TODO
+<!--
+## 8. 남은 TODO
 
 - [ ] 회원탈퇴 에러
 - [ ] 알림 설정 토글 기능
 - [ ] 알림 페이지 데이터 페칭
 - [ ] 폼 처리 파트 리팩토링(react-hook-form, valibot 적용)
 - [ ] Ariakit UI 라이브러리 도입하여 웹 접근성 향상
+-->
 
-
-## 8. 레슨런 및 스페셜 포인트
+## 7. 레슨런 및 스페셜 포인트
 
 ### 1) 기술적 측면
 
